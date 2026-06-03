@@ -5,6 +5,7 @@ import Tutorials from "./pages/Tutorials";
 import CommandReference from "./pages/CommandReference";
 import Quiz from "./pages/Quiz";
 import Profile from "./pages/Profile";
+import Leaderboard from "./pages/Leaderboard";
 import { GitProgressProvider, useGitProgress } from "./context/GitProgressContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Heart, Trophy } from "lucide-react";
@@ -49,6 +50,8 @@ function AppContent() {
         return <Quiz />;
       case "profile":
         return <Profile />;
+      case "leaderboard":
+        return <Leaderboard />;
       default:
         return (
           <Home 
