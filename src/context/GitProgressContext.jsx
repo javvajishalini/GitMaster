@@ -86,7 +86,20 @@ export function GitProgressProvider({ children }) {
     };
   }, [completedTutorials, completedChallenges, quizAttempts, totalMilestones]);
 
-  // Badge Evaluation Logic
+  // Command usage tracking
+  const [commandUsage, setCommandUsage] = useState({});
+
+  const clearCommandUsage = () => setCommandUsage({});
+
+  // Increment usage for a command
+  const recordCommandUsage = (cmd) => {
+    setCommandUsage((prev) => {
+      const count = prev[cmd] ?? 0;
+      return { ...prev, [cmd]: count + 1 };
+    });
+  };
+
+  // Exported via context value below
   useEffect(() => {
     const newBadges = [];
     
@@ -178,7 +191,9 @@ export function GitProgressProvider({ children }) {
         gitState,
         setGitState,
         progressStats,
-        unlockedBadges,
+        commandUsage,
+        recordCommandUsage,
+        clearCommandUsage,
         completeTutorial,
         completeChallenge,
         recordQuizAttempt,
