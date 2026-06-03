@@ -22,7 +22,7 @@ export default function CommandCard({ command }) {
   };
 
   return (
-    <div className="flex flex-col rounded-2xl border border-slate-900 bg-slate-950/40 hover:border-slate-800 transition-all duration-200 group overflow-hidden">
+    <div className="flex flex-col rounded-2xl border border-[color:var(--border-footer)] bg-[color:var(--bg-app)] hover:border-[color:var(--text-muted)] transition-all duration-200 group overflow-hidden">
       {/* Header info */}
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
@@ -33,26 +33,26 @@ export default function CommandCard({ command }) {
             
             <button
               onClick={handleCopy}
-              className="text-slate-500 hover:text-white p-1.5 rounded-lg hover:bg-slate-900 transition-colors"
+              className="text-[color:var(--text-muted)] hover:text-[color:var(--text-body)] p-1.5 rounded-lg hover:bg-[color:var(--bg-footer)] transition-colors"
               title="Copy Syntax to Clipboard"
             >
               {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
             </button>
           </div>
 
-          <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-1.5 font-mono">
-            <Terminal size={16} className="text-indigo-400" />
+          <h3 className="text-lg font-bold text-[color:var(--text-body)] mb-2 flex items-center gap-1.5 font-mono">
+            <Terminal size={16} className="text-indigo-500" />
             {command.name}
           </h3>
 
-          <p className="text-slate-400 text-xs leading-relaxed mb-4">
+          <p className="text-[color:var(--text-subtle)] text-xs leading-relaxed mb-4">
             {command.description}
           </p>
         </div>
 
         {/* Syntax panel */}
-        <div className="rounded-lg bg-slate-900/60 border border-slate-800/80 p-3.5 relative overflow-x-auto">
-          <span className="absolute right-2 top-2 text-[9px] font-mono text-slate-600 font-semibold uppercase">Syntax</span>
+        <div className="rounded-lg bg-[color:var(--bg-footer)] border border-[color:var(--border-footer)] p-3.5 relative overflow-x-auto">
+          <span className="absolute right-2 top-2 text-[9px] font-mono text-[color:var(--text-muted)] font-semibold uppercase">Syntax</span>
           <code className="text-indigo-300 font-mono text-xs whitespace-pre-wrap block pr-8">
             {command.syntax}
           </code>
@@ -61,11 +61,11 @@ export default function CommandCard({ command }) {
 
       {/* Code Example Preview */}
       {command.example && (
-        <div className="bg-slate-900/20 border-t border-slate-900/50 p-4">
-          <div className="flex items-center gap-1 text-[10px] text-slate-500 font-mono mb-1.5 uppercase font-semibold">
+        <div className="bg-[color:var(--bg-footer)] border-t border-[color:var(--border-footer)] p-4">
+          <div className="flex items-center gap-1 text-[10px] text-[color:var(--text-muted)] font-mono mb-1.5 uppercase font-semibold">
             <Info size={11} /> Example Usage
           </div>
-          <pre className="text-[11px] font-mono text-slate-400 bg-slate-950 p-2.5 rounded-lg border border-slate-900/80 overflow-x-auto">
+          <pre className="text-[11px] font-mono text-[color:var(--text-subtle)] bg-[color:var(--bg-app)] p-2.5 rounded-lg border border-[color:var(--border-footer)] overflow-x-auto">
             {command.example}
           </pre>
         </div>

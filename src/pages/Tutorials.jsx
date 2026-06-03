@@ -50,8 +50,8 @@ function PracticeQuiz({ quiz, onQuizPassed, isPassed }) {
           <CheckCircle size={24} />
         </div>
         <div className="space-y-1">
-          <h5 className="text-sm font-bold text-white">Quiz Practice Completed</h5>
-          <p className="text-[11px] text-slate-400">You successfully cleared the questions for this lesson module.</p>
+          <h5 className="text-sm font-bold text-[color:var(--text-body)]">Quiz Practice Completed</h5>
+          <p className="text-[11px] text-[color:var(--text-subtle)]">You successfully cleared the questions for this lesson module.</p>
         </div>
         <button
           onClick={handleReset}
@@ -66,13 +66,13 @@ function PracticeQuiz({ quiz, onQuizPassed, isPassed }) {
   return (
     <div className="space-y-4">
       {/* Question tracker */}
-      <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 uppercase font-semibold">
+      <div className="flex items-center justify-between text-[10px] font-mono text-[color:var(--text-muted)] uppercase font-semibold">
         <span>Question {currentQIdx + 1} of {quiz.length}</span>
-        <span className="text-indigo-400">Intro Quiz</span>
+        <span className="text-indigo-500">Intro Quiz</span>
       </div>
 
       {/* Question prompt */}
-      <p className="text-xs font-semibold text-slate-200 text-left">
+      <p className="text-xs font-semibold text-[color:var(--text-body)] text-left">
         {question.question}
       </p>
 
@@ -82,14 +82,14 @@ function PracticeQuiz({ quiz, onQuizPassed, isPassed }) {
           const isSelected = selectedOpt === idx;
           const isCorrectAns = idx === question.answer;
 
-          let style = "border-slate-800 bg-slate-900/30 text-slate-300 hover:border-slate-700 hover:bg-slate-900/60";
+          let style = "border-[color:var(--border-footer)] bg-[color:var(--bg-footer)] text-[color:var(--text-body)] hover:border-[color:var(--text-muted)] hover:bg-[color:var(--bg-app)]";
           if (isAnswered) {
             if (isCorrectAns) {
-              style = "border-emerald-500 bg-emerald-500/10 text-emerald-300 font-medium";
+              style = "border-emerald-500 bg-emerald-500/10 text-emerald-500 font-medium";
             } else if (isSelected) {
-              style = "border-rose-500 bg-rose-500/10 text-rose-300 font-medium";
+              style = "border-rose-500 bg-rose-500/10 text-rose-500 font-medium";
             } else {
-              style = "border-slate-950 bg-slate-950/20 text-slate-600 opacity-60";
+              style = "border-[color:var(--bg-footer)] bg-[color:var(--bg-app)] text-[color:var(--text-muted)] opacity-60";
             }
           }
 
@@ -103,7 +103,7 @@ function PracticeQuiz({ quiz, onQuizPassed, isPassed }) {
               <span className={`w-5 h-5 rounded font-mono text-[10px] font-bold flex items-center justify-center border shrink-0 ${
                 isSelected 
                   ? "bg-indigo-600 border-indigo-500 text-white" 
-                  : "bg-slate-800 border-slate-700 text-slate-400"
+                  : "bg-[color:var(--bg-app)] border-[color:var(--border-footer)] text-[color:var(--text-subtle)]"
               }`}>
                 {String.fromCharCode(65 + idx)}
               </span>
@@ -124,7 +124,7 @@ function PracticeQuiz({ quiz, onQuizPassed, isPassed }) {
             {isCorrect ? <CheckCircle size={12} /> : <AlertTriangle size={12} />}
             {isCorrect ? "Correct answer!" : "Incorrect option!"}
           </div>
-          <p className="text-slate-300 leading-relaxed font-sans">{question.explanation}</p>
+          <p className="text-[color:var(--text-body)] leading-relaxed font-sans">{question.explanation}</p>
           
           {isCorrect ? (
             <div className="pt-2 flex justify-end">
@@ -140,7 +140,7 @@ function PracticeQuiz({ quiz, onQuizPassed, isPassed }) {
             <div className="pt-1.5 flex justify-end">
               <button
                 onClick={() => { setSelectedOpt(null); setIsAnswered(false); }}
-                className="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-3 py-1.5 rounded-lg text-[10px]"
+                className="bg-[color:var(--bg-footer)] hover:bg-[color:var(--bg-app)] border border-[color:var(--border-footer)] text-[color:var(--text-body)] font-semibold px-3 py-1.5 rounded-lg text-[10px]"
               >
                 Try Again
               </button>
@@ -201,25 +201,25 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
       )}
 
       {/* Main content pane */}
-      <main className="flex-1 bg-slate-900/10 p-4 md:p-6 lg:p-8 flex flex-col gap-6 w-full text-left overflow-y-auto">
+      <main className="flex-1 bg-[color:var(--bg-app)] p-4 md:p-6 lg:p-8 flex flex-col gap-6 w-full text-left overflow-y-auto">
         
         {/* Header Breadcrumbs / Title with Sidebar Menu toggler */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-900 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[color:var(--border-footer)] pb-4">
           <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-xs text-indigo-400 font-mono uppercase font-bold tracking-wider">
+            <div className="flex items-center gap-1.5 text-xs text-indigo-500 font-mono uppercase font-bold tracking-wider">
               <BookOpen size={13} />
               Tutorial Module {currentIdx + 1} of {tutorials.length}
             </div>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-white">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-[color:var(--text-body)]">
               {currentLesson.title}
             </h2>
           </div>
           
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="self-start sm:self-center flex items-center gap-1.5 px-4 py-2 bg-slate-950 border border-slate-800 hover:border-slate-700 hover:bg-slate-900 rounded-xl text-xs text-slate-300 font-semibold transition-all shadow-md select-none active:scale-[0.98]"
+            className="self-start sm:self-center flex items-center gap-1.5 px-4 py-2 bg-[color:var(--bg-footer)] border border-[color:var(--border-footer)] hover:border-[color:var(--text-muted)] hover:bg-[color:var(--bg-app)] rounded-xl text-xs text-[color:var(--text-body)] font-semibold transition-all shadow-md select-none active:scale-[0.98]"
           >
-            {isSidebarOpen ? <X size={14} className="text-rose-400" /> : <Menu size={14} className="text-indigo-400" />}
+            {isSidebarOpen ? <X size={14} className="text-rose-500" /> : <Menu size={14} className="text-indigo-500" />}
             {isSidebarOpen ? "Close Syllabus" : "View Syllabus"}
           </button>
         </div>
@@ -230,7 +230,7 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
           <div className="space-y-6">
             {/* Explanation text */}
             <section className="space-y-4">
-              <p className="text-slate-300 text-sm leading-relaxed font-sans">
+              <p className="text-[color:var(--text-body)] text-sm leading-relaxed font-sans">
                 {currentLesson.explanation}
               </p>
             </section>
@@ -238,10 +238,10 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
             {/* Syntax block */}
             {currentLesson.syntax !== "N/A (Git is a concept and tool suite)" && (
               <section className="space-y-2">
-                <h4 className="text-xs font-mono text-slate-400 font-bold uppercase tracking-wider">
+                <h4 className="text-xs font-mono text-[color:var(--text-muted)] font-bold uppercase tracking-wider">
                   Command Syntax
                 </h4>
-                <div className="bg-slate-950/60 border border-slate-900 p-4 rounded-xl font-mono text-xs text-indigo-300 whitespace-pre-wrap">
+                <div className="bg-[color:var(--bg-footer)] border border-[color:var(--border-footer)] p-4 rounded-xl font-mono text-xs text-indigo-500 whitespace-pre-wrap">
                   {currentLesson.syntax}
                 </div>
               </section>
@@ -250,16 +250,16 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
             {/* Examples */}
             {currentLesson.examples && currentLesson.examples.length > 0 && (
               <section className="space-y-3">
-                <h4 className="text-xs font-mono text-slate-400 font-bold uppercase tracking-wider">
+                <h4 className="text-xs font-mono text-[color:var(--text-muted)] font-bold uppercase tracking-wider">
                   Usage Examples
                 </h4>
                 <div className="grid grid-cols-1 gap-3">
                   {currentLesson.examples.map((ex, i) => (
-                    <div key={i} className="bg-slate-950/30 border border-slate-900/60 rounded-xl p-4 space-y-2">
-                      <div className="text-xs text-slate-400 font-sans font-medium">
+                    <div key={i} className="bg-[color:var(--bg-footer)] border border-[color:var(--border-footer)] rounded-xl p-4 space-y-2">
+                      <div className="text-xs text-[color:var(--text-subtle)] font-sans font-medium">
                         {ex.description}
                       </div>
-                      <pre className="bg-slate-950 p-3 rounded-lg border border-slate-900 font-mono text-xs text-slate-200 overflow-x-auto">
+                      <pre className="bg-[color:var(--bg-app)] p-3 rounded-lg border border-[color:var(--border-footer)] font-mono text-xs text-[color:var(--text-body)] overflow-x-auto">
                         {ex.code}
                       </pre>
                     </div>
@@ -270,13 +270,13 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
 
             {/* Notes */}
             {currentLesson.notes && (
-              <section className="bg-indigo-950/15 border border-indigo-900/30 rounded-2xl p-4 flex gap-3">
-                <div className="shrink-0 text-indigo-400 pt-0.5">
+              <section className="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-4 flex gap-3">
+                <div className="shrink-0 text-indigo-500 pt-0.5">
                   <Info size={18} />
                 </div>
                 <div className="space-y-1">
-                  <h5 className="text-xs font-bold text-white uppercase tracking-wider font-mono">Pro Tip / Note</h5>
-                  <p className="text-slate-300 text-xs font-sans leading-relaxed">
+                  <h5 className="text-xs font-bold text-[color:var(--text-body)] uppercase tracking-wider font-mono">Pro Tip / Note</h5>
+                  <p className="text-[color:var(--text-subtle)] text-xs font-sans leading-relaxed">
                     {currentLesson.notes}
                   </p>
                 </div>
@@ -284,14 +284,14 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
             )}
 
             {/* Navigation buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-900 pt-6 mt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[color:var(--border-footer)] pt-6 mt-4">
               <button
                 onClick={handlePrev}
                 disabled={currentIdx === 0}
                 className={`w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                   currentIdx === 0
-                    ? "bg-slate-950/20 border-slate-900/60 text-slate-600 cursor-not-allowed"
-                    : "bg-slate-900/40 border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white"
+                    ? "bg-[color:var(--bg-app)] border-[color:var(--border-footer)] text-[color:var(--text-muted)] cursor-not-allowed"
+                    : "bg-[color:var(--bg-footer)] border-[color:var(--border-footer)] hover:border-[color:var(--text-muted)] text-[color:var(--text-subtle)] hover:text-[color:var(--text-body)]"
                 }`}
               >
                 <ChevronLeft size={16} />
@@ -309,7 +309,7 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
                 disabled={currentIdx === tutorials.length - 1 || !challengeDone}
                 className={`w-full sm:w-auto flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                   currentIdx === tutorials.length - 1 || !challengeDone
-                    ? "bg-slate-950/20 border-slate-900/60 text-slate-600 cursor-not-allowed opacity-50"
+                    ? "bg-[color:var(--bg-app)] border-[color:var(--border-footer)] text-[color:var(--text-muted)] cursor-not-allowed opacity-50"
                     : "bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/35 active:scale-[0.98]"
                 }`}
               >
@@ -325,7 +325,7 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
             {hasChallenge ? (
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-mono text-slate-400 font-bold uppercase tracking-wider">
+                  <h4 className="text-xs font-mono text-[color:var(--text-muted)] font-bold uppercase tracking-wider">
                     Practice Challenge Room
                   </h4>
                   {challengeDone && (
@@ -342,13 +342,13 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
                 />
               </div>
             ) : (
-              <div className="bg-slate-950/40 border border-slate-900 rounded-3xl p-5 space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-900 pb-3">
-                  <h4 className="text-xs font-mono text-indigo-400 font-bold uppercase tracking-wider">
+              <div className="bg-[color:var(--bg-footer)] border border-[color:var(--border-footer)] rounded-3xl p-5 space-y-4">
+                <div className="flex items-center justify-between border-b border-[color:var(--border-footer)] pb-3">
+                  <h4 className="text-xs font-mono text-indigo-500 font-bold uppercase tracking-wider">
                     Lesson Practice Quiz
                   </h4>
                   {challengeDone && (
-                    <span className="flex items-center gap-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/20">
+                    <span className="flex items-center gap-1 bg-emerald-500/10 text-emerald-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/20">
                       <CheckCircle size={10} /> Solved
                     </span>
                   )}
@@ -360,7 +360,7 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
                     isPassed={challengeDone} 
                   />
                 ) : (
-                  <p className="text-xs text-slate-500">No practice tasks for this lesson.</p>
+                  <p className="text-xs text-[color:var(--text-muted)]">No practice tasks for this lesson.</p>
                 )}
               </div>
             )}

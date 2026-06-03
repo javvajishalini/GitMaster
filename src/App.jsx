@@ -5,6 +5,7 @@ import Tutorials from "./pages/Tutorials";
 import CommandReference from "./pages/CommandReference";
 import Quiz from "./pages/Quiz";
 import { GitProgressProvider, useGitProgress } from "./context/GitProgressContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import { Heart } from "lucide-react";
 
 function AppContent() {
@@ -43,7 +44,7 @@ function AppContent() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#070a13]">
+    <div className="flex flex-col min-h-screen bg-[color:var(--bg-app)]">
       {/* Top Header Navigation */}
       <Navbar activePage={activePage} setActivePage={setActivePage} />
 
@@ -53,8 +54,8 @@ function AppContent() {
       </div>
 
       {/* App Footer */}
-      <footer className="bg-slate-950 border-t border-slate-900 py-6 text-center text-xs text-slate-500 font-mono select-none">
-        <div className="flex items-center justify-center gap-2 mb-1 text-slate-400">
+      <footer className="bg-[color:var(--bg-footer)] border-t border-[color:var(--border-footer)] py-6 text-center text-xs text-[color:var(--text-muted)] font-mono select-none">
+        <div className="flex items-center justify-center gap-2 mb-1 text-[color:var(--text-subtle)]">
           <span className="font-extrabold text-sm"><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-violet-500">Git</span><span className="text-white">Master</span></span>
           <span>Terminal Learning Sandbox</span>
         </div>
@@ -67,8 +68,8 @@ function AppContent() {
       {toast && (
         <div className={`fixed bottom-5 right-5 z-[100] max-w-xs md:max-w-sm p-4 rounded-xl border shadow-2xl flex items-center gap-3 backdrop-blur-md transition-all duration-300 ${
           toast.type === "success"
-            ? "bg-emerald-950/85 border-emerald-500/30 text-emerald-300"
-            : "bg-slate-950/85 border-slate-800 text-indigo-300"
+            ? "bg-[color:var(--toast-success-bg)] border-[color:var(--toast-success-border)] text-[color:var(--toast-success-text)]"
+            : "bg-[color:var(--toast-info-bg)] border-[color:var(--toast-info-border)] text-[color:var(--toast-info-text)]"
         }`}>
           <div className="shrink-0">
             {toast.type === "success" ? (
@@ -86,8 +87,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <GitProgressProvider>
-      <AppContent />
-    </GitProgressProvider>
+    <ThemeProvider>
+      <GitProgressProvider>
+        <AppContent />
+      </GitProgressProvider>
+    </ThemeProvider>
   );
 }

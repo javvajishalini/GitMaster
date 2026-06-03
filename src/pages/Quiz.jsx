@@ -57,23 +57,23 @@ export default function Quiz() {
     <div className="max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-8">
       {/* 1. START QUIZ PANEL (IDLE) */}
       {gameState === "idle" && (
-        <div className="glassmorphism border border-slate-900 rounded-3xl p-8 md:p-12 text-center max-w-xl mx-auto space-y-6">
+        <div className="glassmorphism border border-[color:var(--glass-border)] rounded-3xl p-8 md:p-12 text-center max-w-xl mx-auto space-y-6">
           <div className="w-16 h-16 rounded-2xl bg-indigo-600/10 text-indigo-400 flex items-center justify-center border border-indigo-500/20 mx-auto shadow-lg shadow-indigo-600/10">
             <Award size={32} />
           </div>
           
           <div className="space-y-2">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-white">Git Knowledge Arena</h2>
-            <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-[color:var(--text-body)]">Git Knowledge Arena</h2>
+            <p className="text-[color:var(--text-subtle)] text-xs md:text-sm leading-relaxed">
               Test your understanding of Git configuration, initialization, staging, commits, and logs with our short quiz.
             </p>
           </div>
 
-          <div className="bg-slate-950/40 border border-slate-900 rounded-2xl p-4 text-left space-y-2.5 max-w-sm mx-auto">
-            <div className="flex items-center gap-2 text-xs text-slate-300 font-semibold font-mono">
+          <div className="bg-[color:var(--bg-app)] border border-[color:var(--border-footer)] rounded-2xl p-4 text-left space-y-2.5 max-w-sm mx-auto">
+            <div className="flex items-center gap-2 text-xs text-[color:var(--text-body)] font-semibold font-mono">
               <Info size={14} className="text-indigo-400" /> QUIZ RULES:
             </div>
-            <ul className="text-[11px] text-slate-400 list-disc list-inside space-y-1">
+            <ul className="text-[11px] text-[color:var(--text-subtle)] list-disc list-inside space-y-1">
               <li>Contains {quizQuestions.length} multiple-choice questions.</li>
               <li>Instant feedback showing explanations is provided.</li>
               <li>Scores are tracked and visible on the dashboard.</li>
@@ -108,19 +108,19 @@ export default function Quiz() {
       {gameState === "completed" && (
         <div className="space-y-8">
           {/* Main Score summary */}
-          <div className="glassmorphism border border-slate-900 rounded-3xl p-8 md:p-12 text-center max-w-xl mx-auto space-y-6">
+          <div className="glassmorphism border border-[color:var(--glass-border)] rounded-3xl p-8 md:p-12 text-center max-w-xl mx-auto space-y-6">
             <h3 className={`text-3xl font-extrabold ${getScoreMessage(Math.round((score / quizQuestions.length) * 100)).color}`}>
               {getScoreMessage(Math.round((score / quizQuestions.length) * 100)).title}
             </h3>
             
             <div className="space-y-1">
-              <div className="text-slate-400 text-xs font-mono uppercase tracking-widest font-bold">Your Score Outcome</div>
-              <div className="text-5xl font-mono font-extrabold text-white">
-                {score} <span className="text-slate-600 text-2xl font-light">/ {quizQuestions.length}</span>
+              <div className="text-[color:var(--text-muted)] text-xs font-mono uppercase tracking-widest font-bold">Your Score Outcome</div>
+              <div className="text-5xl font-mono font-extrabold text-[color:var(--text-body)]">
+                {score} <span className="text-[color:var(--text-muted)] text-2xl font-light">/ {quizQuestions.length}</span>
               </div>
             </div>
 
-            <p className="text-slate-300 text-xs md:text-sm leading-relaxed max-w-md mx-auto">
+            <p className="text-[color:var(--text-subtle)] text-xs md:text-sm leading-relaxed max-w-md mx-auto">
               {getScoreMessage(Math.round((score / quizQuestions.length) * 100)).desc}
             </p>
 
@@ -135,7 +135,7 @@ export default function Quiz() {
 
           {/* Detailed Question Review List */}
           <div className="space-y-4 max-w-2xl mx-auto">
-            <h4 className="text-xs font-mono text-slate-500 font-bold uppercase tracking-wider text-left pl-2">
+            <h4 className="text-xs font-mono text-[color:var(--text-muted)] font-bold uppercase tracking-wider text-left pl-2">
               Detailed Question Review
             </h4>
 
@@ -146,9 +146,9 @@ export default function Quiz() {
                 const userChoice = log ? log.selectedIndex : null;
 
                 return (
-                  <div key={q.id} className="bg-slate-950/40 border border-slate-900 rounded-2xl p-5 text-left space-y-3">
+                  <div key={q.id} className="bg-[color:var(--bg-app)] border border-[color:var(--border-footer)] rounded-2xl p-5 text-left space-y-3">
                     <div className="flex items-start justify-between gap-4">
-                      <h5 className="text-sm font-bold text-white leading-relaxed">
+                      <h5 className="text-sm font-bold text-[color:var(--text-body)] leading-relaxed">
                         {idx + 1}. {q.question}
                       </h5>
                       <span className={`shrink-0 flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border ${
@@ -169,12 +169,12 @@ export default function Quiz() {
                     </div>
 
                     {/* Choices Review */}
-                    <div className="text-xs space-y-1.5 pl-3 border-l-2 border-slate-800">
+                    <div className="text-xs space-y-1.5 pl-3 border-l-2 border-[color:var(--border-footer)]">
                       {q.options.map((opt, oIdx) => {
                         const correctAns = oIdx === q.answer;
                         const userAns = oIdx === userChoice;
 
-                        let style = "text-slate-400";
+                        let style = "text-[color:var(--text-subtle)]";
                         if (correctAns) style = "text-emerald-400 font-semibold";
                         else if (userAns) style = "text-rose-400 line-through";
 
@@ -189,8 +189,8 @@ export default function Quiz() {
                     </div>
 
                     {/* Explanation */}
-                    <div className="text-[11px] text-slate-500 leading-relaxed font-sans bg-slate-900/30 p-2.5 rounded-lg border border-slate-900/60">
-                      <span className="font-mono text-slate-400 font-bold uppercase text-[9px] block mb-0.5">Explanation</span>
+                    <div className="text-[11px] text-[color:var(--text-muted)] leading-relaxed font-sans bg-[color:var(--bg-footer)] p-2.5 rounded-lg border border-[color:var(--border-footer)]">
+                      <span className="font-mono text-[color:var(--text-subtle)] font-bold uppercase text-[9px] block mb-0.5">Explanation</span>
                       {q.explanation}
                     </div>
                   </div>
