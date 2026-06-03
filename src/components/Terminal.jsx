@@ -172,19 +172,21 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
           }
           break;
 
-        case "status":
+        case "status": {
+          const currentB = gitState.currentBranch || "main";
           if (gitState.stagedFiles.length === 0 && gitState.unstagedFiles.length === 0) {
-            print("On branch main\nnothing to commit, working tree clean");
+            print(`On branch ${currentB}\nnothing to commit, working tree clean`);
           } else if (gitState.stagedFiles.length === 0 && gitState.unstagedFiles.length > 0) {
-            print("On branch main\n\nNo commits yet\n\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\t" + gitState.unstagedFiles.join("\n\t") + "\n\nnothing added to commit but untracked files present (use \"git add\" to track)");
+            print(`On branch ${currentB}\n\nNo commits yet\n\nUntracked files:\n  (use "git add <file>..." to include in what will be committed)\n\t` + gitState.unstagedFiles.join("\n\t") + "\n\nnothing added to commit but untracked files present (use \"git add\" to track)");
           } else {
             const stagedList = gitState.stagedFiles.map(f => `\tnew file:   ${f}`).join("\n");
             const unstagedList = gitState.unstagedFiles.length > 0 
-              ? `\n\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\t` + gitState.unstagedFiles.join("\n\t")
+              ? `\n\nUntracked files:\n  (use "git add <file>..." to include in what will be committed)\n\t` + gitState.unstagedFiles.join("\n\t")
               : "";
-            print(`On branch main\n\nNo commits yet\n\nChanges to be committed:\n  (use "git rm --cached <file>..." to unstage)\n${stagedList}${unstagedList}`);
+            print(`On branch ${currentB}\n\nNo commits yet\n\nChanges to be committed:\n  (use "git rm --cached <file>..." to unstage)\n${stagedList}${unstagedList}`);
           }
           break;
+        }
 
         case "add":
           const fileToStage = args.slice(2).join(" ");
@@ -231,7 +233,7 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
           }
 
           if (gitState.stagedFiles.length === 0) {
-            print("On branch main\nnothing to commit, working tree clean");
+            print(`On branch ${gitState.currentBranch || "main"}\nnothing to commit, working tree clean`);
           } else {
             const commitHash = Math.random().toString(16).substring(2, 9);
             const newCommit = {
@@ -244,19 +246,100 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
               commits: [newCommit, ...prev.commits],
               stagedFiles: []
             }));
-            print(`[main (root-commit) ${commitHash}] ${msg}\n ${gitState.stagedFiles.length} file(s) changed, 12 insertions(+)`);
+            print(`[${gitState.currentBranch || "main"} (root-commit) ${commitHash}] ${msg}\n ${gitState.stagedFiles.length} file(s) changed, 12 insertions(+)`);
           }
           break;
 
         case "log":
           if (gitState.commits.length === 0) {
-            print("fatal: your current branch 'main' does not have any commits yet", "error");
+            print(`fatal: your current branch '${gitState.currentBranch || "main"}' does not have any commits yet`, "error");
           } else {
             gitState.commits.forEach(c => {
-              print(`commit ${c.hash}7a8b9c0d3a5efb867c29ae7d92a10dcf20ea3b25a (HEAD -> main)\nAuthor: John Doe <johndoe@example.com>\nDate:   ${c.date}\n\n    ${c.message}\n`, "log");
+              print(`commit ${c.hash}7a8b9c0d3a5efb867c29ae7d92a10dcf20ea3b25a (HEAD -> ${gitState.currentBranch || "main"})\nAuthor: John Doe <johndoe@example.com>\nDate:   ${c.date}\n\n    ${c.message}\n`, "log");
             });
           }
           break;
+
+        case "branch": {
+          const branchName = args[2];
+          if (!branchName) {
+            // list branches
+            const branches = gitState.branches || ["main"];
+            branches.forEach(b => {
+              if (b === (gitState.currentBranch || "main")) {
+                print(`* ${b}`, "success");
+              } else {
+                print(`  ${b}`);
+              }
+            });
+          } else {
+            const branches = gitState.branches || ["main"];
+            if (branches.includes(branchName)) {
+              print(`fatal: A branch named '${branchName}' already exists.`, "error");
+            } else {
+              setGitState(prev => ({
+                ...prev,
+                branches: [...(prev.branches || ["main"]), branchName]
+              }));
+            }
+          }
+          break;
+        }
+
+        case "checkout":
+        case "switch": {
+          const isNewBranch = (gitCmd === "checkout" && args[2] === "-b") || (gitCmd === "switch" && args[2] === "-c");
+          const targetBranch = isNewBranch ? args[3] : args[2];
+          
+          if (!targetBranch) {
+            print(`fatal: missing branch name`, "error");
+            break;
+          }
+
+          const currentBranches = gitState.branches || ["main"];
+          if (isNewBranch) {
+            if (currentBranches.includes(targetBranch)) {
+              print(`fatal: A branch named '${targetBranch}' already exists.`, "error");
+            } else {
+              setGitState(prev => ({
+                ...prev,
+                branches: [...(prev.branches || ["main"]), targetBranch],
+                currentBranch: targetBranch
+              }));
+              print(`Switched to a new branch '${targetBranch}'`);
+            }
+          } else {
+            if (!currentBranches.includes(targetBranch)) {
+              print(`error: pathspec '${targetBranch}' did not match any file(s) known to git`, "error");
+            } else {
+              setGitState(prev => ({
+                ...prev,
+                currentBranch: targetBranch
+              }));
+              print(`Switched to branch '${targetBranch}'`);
+            }
+          }
+          break;
+        }
+
+        case "merge": {
+          const mergeBranch = args[2];
+          if (!mergeBranch) {
+            print("merge: missing branch", "error");
+            break;
+          }
+          const allBranches = gitState.branches || ["main"];
+          if (!allBranches.includes(mergeBranch)) {
+            print(`merge: ${mergeBranch} - not something we can merge`, "error");
+            break;
+          }
+          if (mergeBranch === (gitState.currentBranch || "main")) {
+            print("Already up to date.");
+          } else {
+            print(`Updating ...\nFast-forward\n 1 file changed`);
+          }
+          break;
+        }
 
         default:
           print(`git: '${gitCmd}' is not a git command. See 'git --help'.`, "error");

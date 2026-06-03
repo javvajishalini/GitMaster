@@ -174,5 +174,76 @@ export const tutorials = [
       simulatedOutput: "commit a1b2c3dfb867c29ae7d92a10dcf20ea3b25a3bc4 (HEAD -> main)\nAuthor: John Doe <johndoe@example.com>\nDate:   Wed Jun 3 10:00:00 2026 +0530\n\n    Initial commit",
       updatesState: { completedLog: true }
     }
+  },
+  {
+    id: "branch",
+    title: "Git Branch",
+    explanation: "Branches are a core concept in Git that allow you to diverge from the main line of development and continue to do work without messing with that main line. `git branch` lets you create, list, rename, and delete branches. It doesn't let you switch between them.",
+    syntax: "git branch <branch-name>\ngit branch (to list)",
+    examples: [
+      {
+        description: "Create a new branch named 'feature-login'",
+        code: "git branch feature-login"
+      },
+      {
+        description: "List all local branches",
+        code: "git branch"
+      }
+    ],
+    notes: "The default branch name in Git is usually 'main' or 'master'. Creating a branch is just creating a new pointer to your current commit.",
+    challenge: {
+      instruction: "Create a new branch called 'feature' using the branch command.",
+      expectedCommands: ["git branch feature"],
+      hint: "Type `git branch feature` to create the new branch.",
+      successMessage: "Awesome! You've created a new branch called 'feature'. Note that this doesn't switch you to that branch yet.",
+      simulatedOutput: "",
+      updatesState: { branches: ["main", "feature"] }
+    }
+  },
+  {
+    id: "checkout",
+    title: "Git Checkout / Switch",
+    explanation: "To start working on a different branch, you need to switch to it. `git checkout` (or the newer `git switch`) updates the files in your working directory to match the version stored in that branch, and tells Git to record all new commits on that branch.",
+    syntax: "git checkout <branch-name>\ngit switch <branch-name>\ngit checkout -b <new-branch>",
+    examples: [
+      {
+        description: "Switch to an existing branch named 'feature-login'",
+        code: "git checkout feature-login"
+      },
+      {
+        description: "Create a new branch and switch to it immediately",
+        code: "git checkout -b bugfix"
+      }
+    ],
+    notes: "When you switch branches, Git replaces your working directory with the snapshot of the commit that the branch points to.",
+    challenge: {
+      instruction: "Switch your workspace to the 'feature' branch you just created.",
+      expectedCommands: ["git checkout feature", "git switch feature"],
+      hint: "Run `git checkout feature` or `git switch feature`.",
+      successMessage: "Switched successfully! Any new commits you make will now be added to the 'feature' branch instead of 'main'.",
+      simulatedOutput: "Switched to branch 'feature'",
+      updatesState: { currentBranch: "feature" }
+    }
+  },
+  {
+    id: "merge",
+    title: "Git Merge",
+    explanation: "Merging is Git's way of putting a forked history back together again. The `git merge` command lets you take the independent lines of development created by `git branch` and integrate them into a single branch. You must be on the branch you want to merge *into*.",
+    syntax: "git merge <branch-to-merge>",
+    examples: [
+      {
+        description: "Merge the 'feature-login' branch into your current branch",
+        code: "git merge feature-login"
+      }
+    ],
+    notes: "Before merging, ensure you have committed all your changes and switched to the target branch (usually 'main').",
+    challenge: {
+      instruction: "First, switch back to 'main'. Then, merge the 'feature' branch into 'main'. (Hint: you can do this in one step for this simulation by typing `git merge feature`)",
+      expectedCommands: ["git merge feature"],
+      hint: "Normally you checkout 'main' first, but for this challenge just type `git merge feature`.",
+      successMessage: "Merge complete! You've successfully integrated the changes from the 'feature' branch into the main branch.",
+      simulatedOutput: "Updating a1b2c3d..e5f6g7h\nFast-forward\n index.html | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)",
+      updatesState: { currentBranch: "main" }
+    }
   }
 ];

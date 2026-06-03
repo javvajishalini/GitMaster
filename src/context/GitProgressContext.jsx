@@ -18,7 +18,9 @@ export function GitProgressProvider({ children }) {
     stagedFiles: [],
     unstagedFiles: ["index.html", "style.css"],
     commits: [],
-    completedLog: false
+    completedLog: false,
+    currentBranch: "main",
+    branches: ["main"]
   });
 
   const showToast = (message, type = "info") => {
@@ -99,7 +101,9 @@ export function GitProgressProvider({ children }) {
       stagedFiles: [],
       unstagedFiles: ["index.html", "style.css"],
       commits: [],
-      completedLog: false
+      completedLog: false,
+      currentBranch: "main",
+      branches: ["main"]
     });
     showToast("Application progress has been reset.", "info");
   };
