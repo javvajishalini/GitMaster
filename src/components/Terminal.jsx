@@ -5,7 +5,7 @@ import CommandTooltip from "./CommandTooltip";
 import { Terminal as TerminalIcon, RefreshCw, Trash2, HelpCircle, CheckCircle, AlertTriangle } from "lucide-react";
 
 export default function Terminal({ challenge, onSuccess, activeLessonId }) {
-  const { gitState, setGitState } = useGitProgress();
+  const { gitState, setGitState, recordCommandUsage } = useGitProgress();
   const [input, setInput] = useState("");
   const [matchedCommand, setMatchedCommand] = useState(null);
   const [history, setHistory] = useState([
@@ -93,6 +93,12 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
     const print = (text, type = "output") => {
       setHistory(prev => [...prev, { text, type }]);
     };
+
+    // Track command usage for the Leaderboard
+    const baseCmd = cmdText === "clear" || cmdText === "help"
+      ? cmdText
+      : args.slice(0, 2).join(" "); // e.g. "git commit" from "git commit -m ..."
+    recordCommandUsage(baseCmd);
 
     if (cmdText === "clear") {
       setHistory([]);
