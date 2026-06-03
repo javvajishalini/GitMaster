@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Tutorials from "./pages/Tutorials";
@@ -8,11 +8,24 @@ import Profile from "./pages/Profile";
 import { GitProgressProvider, useGitProgress } from "./context/GitProgressContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Heart, Trophy } from "lucide-react";
+import confetti from "canvas-confetti";
 
 function AppContent() {
   const [activePage, setActivePage] = useState("home"); // home, tutorials, reference, quiz, profile
   const [activeTutorialId, setActiveTutorialId] = useState("intro");
   const { toast, achievementToast, progressStats } = useGitProgress();
+
+  // Trigger a confetti burst when a new achievement is unlocked
+  useEffect(() => {
+    if (achievementToast) {
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#4f46e5", "#a78bfa", "#c4b5fd"],
+      });
+    }
+  }, [achievementToast]);
 
   const renderPage = () => {
     switch (activePage) {
