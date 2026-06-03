@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useGitProgress } from "../context/GitProgressContext";
+import { COMMAND_TOOLTIPS } from "../data/commandTooltips";
+import CommandTooltip from "./CommandTooltip";
 import { Terminal as TerminalIcon, RefreshCw, Trash2, HelpCircle, CheckCircle, AlertTriangle } from "lucide-react";
 
 export default function Terminal({ challenge, onSuccess, activeLessonId }) {
   const { gitState, setGitState } = useGitProgress();
   const [input, setInput] = useState("");
+  const [matchedCommand, setMatchedCommand] = useState(null);
   const [history, setHistory] = useState([
     { text: "# GitMaster Interactive Practice Terminal v1.0", type: "system" },
     { text: "# Type 'help' to see list of supported commands.", type: "system" },
@@ -30,6 +33,18 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
     }
   };
 
+  // Detect the longest matching Git command for tooltip
+  useEffect(() => {
+    const trimmed = input.trim();
+    let bestMatch = null;
+    for (const cmd of Object.keys(COMMAND_TOOLTIPS)) {
+      if (trimmed.startsWith(cmd)) {
+        if (!bestMatch || cmd.length > bestMatch.length) bestMatch = cmd;
+      }
+    }
+    setMatchedCommand(bestMatch);
+  }, [input]);
+
   // Keyboard navigation for command history (up/down arrow keys)
   const handleKeyDown = (e) => {
     if (e.key === "ArrowUp") {
@@ -48,6 +63,7 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
       } else if (historyIndex === 0) {
         setHistoryIndex(-1);
         setInput("");
+      setMatchedCommand(null);
       }
     }
   };
@@ -492,6 +508,7 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
         })}
 
         {/* Input prompt line */}
+        <CommandTooltip command={matchedCommand} />
         <form onSubmit={handleCommandSubmit} className="flex items-center pt-1">
           <span className="text-indigo-400 mr-2 font-bold shrink-0">$</span>
           <input
