@@ -20,7 +20,9 @@ export function GitProgressProvider({ children }) {
     commits: [],
     completedLog: false,
     currentBranch: "main",
-    branches: ["main"]
+    branches: ["main"],
+    remoteUrl: null,
+    remoteCommits: []
   });
 
   const showToast = (message, type = "info") => {
@@ -103,7 +105,9 @@ export function GitProgressProvider({ children }) {
       commits: [],
       completedLog: false,
       currentBranch: "main",
-      branches: ["main"]
+      branches: ["main"],
+      remoteUrl: null,
+      remoteCommits: []
     });
     showToast("Application progress has been reset.", "info");
   };
