@@ -341,6 +341,47 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
           break;
         }
 
+        case "remote": {
+          if (args[2] === "add") {
+            const remoteName = args[3];
+            const remoteUrl = args[4];
+            if (!remoteName || !remoteUrl) {
+              print("usage: git remote add <name> <url>", "error");
+            } else {
+              setGitState(prev => ({
+                ...prev,
+                remoteUrl: remoteUrl
+              }));
+              // Silent on success
+            }
+          } else if (args[2] === "-v") {
+            if (gitState.remoteUrl) {
+              print(`origin\t${gitState.remoteUrl} (fetch)\norigin\t${gitState.remoteUrl} (push)`);
+            }
+          } else {
+            print("usage: git remote [-v | add <name> <url>]", "error");
+          }
+          break;
+        }
+
+        case "push": {
+          if (!gitState.remoteUrl) {
+            print("fatal: No configured push destination.\nEither specify the URL from the command-line or configure a remote repository using\n\n    git remote add <name> <url>\n", "error");
+          } else {
+            print(`Enumerating objects: 5, done.\nCounting objects: 100% (5/5), done.\nWriting objects: 100% (3/3), 284 bytes | 284.00 KiB/s, done.\nTotal 3 (delta 1), reused 0 (delta 0)\nTo ${gitState.remoteUrl}\n * [new branch]      ${gitState.currentBranch || "main"} -> ${gitState.currentBranch || "main"}`);
+          }
+          break;
+        }
+
+        case "pull": {
+          if (!gitState.remoteUrl) {
+            print("fatal: No remote repository specified.  Please, specify either a URL or a\nremote name from which new revisions should be fetched.", "error");
+          } else {
+            print(`From ${gitState.remoteUrl}\n * branch            ${gitState.currentBranch || "main"}     -> FETCH_HEAD\nAlready up to date.`);
+          }
+          break;
+        }
+
         default:
           print(`git: '${gitCmd}' is not a git command. See 'git --help'.`, "error");
       }
