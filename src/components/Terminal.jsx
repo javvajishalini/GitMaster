@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useGitProgress } from "../context/GitProgressContext";
-import { Terminal as TerminalIcon, RefreshCw, HelpCircle, CheckCircle, AlertTriangle } from "lucide-react";
+import { Terminal as TerminalIcon, RefreshCw, Trash2, HelpCircle, CheckCircle, AlertTriangle } from "lucide-react";
 
 export default function Terminal({ challenge, onSuccess, activeLessonId }) {
   const { gitState, setGitState } = useGitProgress();
@@ -410,6 +410,11 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
     ]);
   };
 
+  // Clear only terminal output without resetting repo state
+  const handleClearTerminal = () => {
+    setHistory([]);
+  };
+
   return (
     <div className="flex flex-col h-[400px] rounded-lg overflow-hidden border border-slate-700 bg-slate-950 shadow-2xl font-mono text-sm">
       {/* Terminal Title Bar */}
@@ -430,6 +435,13 @@ export default function Terminal({ challenge, onSuccess, activeLessonId }) {
             title="Reset Terminal Workspace"
           >
             <RefreshCw size={11} /> Reset files
+          </button>
+          <button
+            onClick={handleClearTerminal}
+            className="text-slate-400 hover:text-slate-200 p-0.5 rounded hover:bg-slate-800 transition-all flex items-center gap-1 text-[11px]"
+            title="Clear terminal output"
+          >
+            <Trash2 size={11} /> Clear
           </button>
         </div>
       </div>
