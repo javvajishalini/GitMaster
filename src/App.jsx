@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Tutorials from "./pages/Tutorials";
 import CommandReference from "./pages/CommandReference";
 import Quiz from "./pages/Quiz";
 import { GitProgressProvider, useGitProgress } from "./context/GitProgressContext";
-import { Heart } from "lucide-react";
-
 function AppContent() {
   const [activePage, setActivePage] = useState("home"); // home, tutorials, reference, quiz
   const [activeTutorialId, setActiveTutorialId] = useState("intro");
@@ -52,16 +51,7 @@ function AppContent() {
         {renderPage()}
       </div>
 
-      {/* App Footer */}
-      <footer className="bg-slate-950 border-t border-slate-900 py-6 text-center text-xs text-slate-500 font-mono select-none">
-        <div className="flex items-center justify-center gap-2 mb-1 text-slate-400">
-          <span className="font-extrabold text-sm"><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-violet-500">Git</span><span className="text-white">Master</span></span>
-          <span>Terminal Learning Sandbox</span>
-        </div>
-        <p className="flex items-center justify-center gap-1">
-          Made for developers with <Heart size={10} className="text-rose-500 fill-rose-500" /> &copy; 2026. All rights reserved.
-        </p>
-      </footer>
+      <Footer setActivePage={setActivePage} />
 
       {/* Floating Toast Notification overlay */}
       {toast && (
