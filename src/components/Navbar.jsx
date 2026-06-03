@@ -1,7 +1,7 @@
 import React from "react";
 import { useGitProgress } from "../context/GitProgressContext";
 import { useTheme } from "../context/ThemeContext";
-import { BookOpen, Clipboard, Award, Home, RefreshCw, Sun, Moon } from "lucide-react";
+import { BookOpen, Clipboard, Award, Home, RefreshCw, Sun, Moon, User } from "lucide-react";
 
 export default function Navbar({ activePage, setActivePage }) {
   const { progressStats, resetProgress } = useGitProgress();
@@ -11,7 +11,8 @@ export default function Navbar({ activePage, setActivePage }) {
     { id: "home", label: "Home", icon: Home },
     { id: "tutorials", label: "Tutorials", icon: BookOpen },
     { id: "reference", label: "Command Reference", icon: Clipboard },
-    { id: "quiz", label: "Quiz Arena", icon: Award }
+    { id: "quiz", label: "Quiz Arena", icon: Award },
+    { id: "profile", label: "Profile", icon: User }
   ];
 
   return (

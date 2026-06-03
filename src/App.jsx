@@ -4,14 +4,15 @@ import Home from "./pages/Home";
 import Tutorials from "./pages/Tutorials";
 import CommandReference from "./pages/CommandReference";
 import Quiz from "./pages/Quiz";
+import Profile from "./pages/Profile";
 import { GitProgressProvider, useGitProgress } from "./context/GitProgressContext";
 import { ThemeProvider } from "./context/ThemeContext";
-import { Heart } from "lucide-react";
+import { Heart, Trophy } from "lucide-react";
 
 function AppContent() {
-  const [activePage, setActivePage] = useState("home"); // home, tutorials, reference, quiz
+  const [activePage, setActivePage] = useState("home"); // home, tutorials, reference, quiz, profile
   const [activeTutorialId, setActiveTutorialId] = useState("intro");
-  const { toast } = useGitProgress();
+  const { toast, achievementToast } = useGitProgress();
 
   const renderPage = () => {
     switch (activePage) {
@@ -33,6 +34,8 @@ function AppContent() {
         return <CommandReference />;
       case "quiz":
         return <Quiz />;
+      case "profile":
+        return <Profile />;
       default:
         return (
           <Home 
@@ -79,6 +82,20 @@ function AppContent() {
             )}
           </div>
           <p className="text-xs font-semibold font-sans">{toast.message}</p>
+        </div>
+      )}
+
+      {/* Achievement Toast Overlay */}
+      {achievementToast && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] max-w-sm w-full mx-4 p-4 rounded-2xl border shadow-2xl flex items-center gap-4 backdrop-blur-md transition-all duration-500 animate-fade-in bg-indigo-500/10 border-indigo-500/30 text-[color:var(--text-body)]">
+          <div className="shrink-0 w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-500 border border-indigo-500/30">
+            <Trophy size={24} />
+          </div>
+          <div className="flex-1">
+            <div className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-0.5">Achievement Unlocked</div>
+            <div className="text-sm font-bold">{achievementToast.title}</div>
+            <div className="text-[11px] text-[color:var(--text-muted)]">{achievementToast.description}</div>
+          </div>
         </div>
       )}
     </div>
