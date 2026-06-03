@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="public/favicon.svg" alt="GitMaster Logo" width="100" />
   
   <h1 align="center">GitMaster</h1>
   <p align="center">
