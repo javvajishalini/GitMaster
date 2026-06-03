@@ -245,5 +245,72 @@ export const tutorials = [
       simulatedOutput: "Updating a1b2c3d..e5f6g7h\nFast-forward\n index.html | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)",
       updatesState: { currentBranch: "main" }
     }
+  },
+  {
+    id: "remote",
+    title: "Git Remote",
+    explanation: "To collaborate with others, you need to manage remote repositories. `git remote add` lets you connect your local repository to a remote server (like GitHub or GitLab).",
+    syntax: "git remote add <name> <url>\ngit remote -v",
+    examples: [
+      {
+        description: "Add a remote repository named 'origin'",
+        code: "git remote add origin https://github.com/user/repo.git"
+      }
+    ],
+    notes: "'origin' is the default conventional name given to the primary remote repository you clone from or push to.",
+    challenge: {
+      instruction: "Connect your local repository to a remote called 'origin' at 'https://github.com/user/repo.git'.",
+      expectedCommands: ["git remote add origin https://github.com/user/repo.git"],
+      hint: "Type `git remote add origin https://github.com/user/repo.git`",
+      successMessage: "Great! Your local repository is now linked to a remote server.",
+      simulatedOutput: "",
+      updatesState: { remoteUrl: "https://github.com/user/repo.git" }
+    }
+  },
+  {
+    id: "push",
+    title: "Git Push",
+    explanation: "The `git push` command is used to upload local repository content to a remote repository. It transfers your commits to the remote server so others can access them.",
+    syntax: "git push <remote> <branch>",
+    examples: [
+      {
+        description: "Push your local 'main' branch to the 'origin' remote",
+        code: "git push origin main"
+      },
+      {
+        description: "Set upstream and push (first time)",
+        code: "git push -u origin main"
+      }
+    ],
+    notes: "If it's your first time pushing a new branch, you often use the `-u` (or `--set-upstream`) flag to link the local branch to the remote branch.",
+    challenge: {
+      instruction: "Push your commits to the 'main' branch of the 'origin' remote.",
+      expectedCommands: ["git push origin main", "git push -u origin main", "git push"],
+      hint: "Run `git push origin main`.",
+      successMessage: "Pushed successfully! Your local commits are now safely stored on the remote server.",
+      simulatedOutput: "Enumerating objects: 5, done.\nCounting objects: 100% (5/5), done.\nWriting objects: 100% (3/3), 284 bytes | 284.00 KiB/s, done.\nTotal 3 (delta 1), reused 0 (delta 0), pack-reused 0\nTo https://github.com/user/repo.git\n * [new branch]      main -> main",
+      updatesState: {}
+    }
+  },
+  {
+    id: "pull",
+    title: "Git Pull",
+    explanation: "The `git pull` command is used to fetch and download content from a remote repository and immediately update the local repository to match that content. It's essentially a combination of `git fetch` followed by `git merge`.",
+    syntax: "git pull <remote> <branch>",
+    examples: [
+      {
+        description: "Pull updates from the remote 'main' branch",
+        code: "git pull origin main"
+      }
+    ],
+    notes: "Always pull before you start working and before you push, to ensure you have the latest changes from your teammates and avoid merge conflicts.",
+    challenge: {
+      instruction: "Pull the latest changes from the 'origin' remote on the 'main' branch.",
+      expectedCommands: ["git pull origin main", "git pull"],
+      hint: "Run `git pull origin main`.",
+      successMessage: "Pulled successfully! Your local repository is fully up to date with the remote.",
+      simulatedOutput: "From https://github.com/user/repo.git\n * branch            main       -> FETCH_HEAD\nAlready up to date.",
+      updatesState: {}
+    }
   }
 ];
