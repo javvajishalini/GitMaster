@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Terminal from "../components/Terminal";
+import GitTreeVisualizer from "../components/GitTreeVisualizer";
 import { tutorials } from "../data/tutorials";
 import { useGitProgress } from "../context/GitProgressContext";
 import { ChevronLeft, ChevronRight, BookOpen, Info, HelpCircle, CheckCircle, AlertTriangle, RefreshCw, Menu, X } from "lucide-react";
@@ -318,8 +319,9 @@ export default function Tutorials({ activeTutorialId, setActiveTutorialId }) {
             </div>
           </div>
 
-          {/* Right Column: Terminal challenge OR Practice Quiz */}
+          {/* Right Column: Visualizer + Terminal challenge OR Practice Quiz */}
           <div className="space-y-4 lg:sticky lg:top-24">
+            <GitTreeVisualizer />
             {hasChallenge ? (
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
