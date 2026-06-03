@@ -12,7 +12,7 @@ import { Heart, Trophy } from "lucide-react";
 function AppContent() {
   const [activePage, setActivePage] = useState("home"); // home, tutorials, reference, quiz, profile
   const [activeTutorialId, setActiveTutorialId] = useState("intro");
-  const { toast, achievementToast } = useGitProgress();
+  const { toast, achievementToast, progressStats } = useGitProgress();
 
   const renderPage = () => {
     switch (activePage) {
@@ -50,6 +50,16 @@ function AppContent() {
     <div className="flex flex-col min-h-screen bg-[color:var(--bg-app)]">
       {/* Top Header Navigation */}
       <Navbar activePage={activePage} setActivePage={setActivePage} />
+
+      {/* Progress Bar */}
+      <div className="px-4 py-2 bg-[color:var(--bg-footer)] border-b border-[color:var(--border-footer)]">
+        <div className="flex items-center space-x-2">
+          <div className="flex-1 h-2 bg-slate-700 rounded-full overflow-hidden">
+            <div className="h-full bg-indigo-500 transition-all duration-300" style={{ width: `${progressStats.percentage}%` }}></div>
+          </div>
+          <span className="text-xs text-[color:var(--text-muted)] font-medium whitespace-nowrap">{progressStats.percentage}%</span>
+        </div>
+      </div>
 
       {/* Main Routed Page Container */}
       <div className="flex-1">
