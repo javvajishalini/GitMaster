@@ -24,7 +24,7 @@ export default function Navbar({ activePage, setActivePage }) {
         className="flex items-center cursor-pointer group"
       >
         <h1 className="text-2xl font-extrabold tracking-tight m-0 leading-none select-none">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-violet-500">Git</span><span className="text-white">Master</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-violet-500">Git</span><span style={{ color: 'var(--brand-master)' }}>Master</span>
         </h1>
       </div>
 
@@ -71,12 +71,24 @@ export default function Navbar({ activePage, setActivePage }) {
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="p-2 text-[color:var(--text-subtle)] hover:text-[color:var(--text-body)] hover:bg-[color:var(--bg-app)] rounded-lg transition-all border border-transparent hover:border-[color:var(--border-footer)]"
+          className="relative p-2 w-9 h-9 flex items-center justify-center text-[color:var(--text-subtle)] hover:text-[color:var(--text-body)] hover:bg-[color:var(--bg-app)] rounded-lg transition-all border border-transparent hover:border-[color:var(--border-footer)] overflow-hidden"
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
           title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
         >
-          <div className={`transition-transform duration-500 flex items-center justify-center ${theme === "light" ? "rotate-180" : "rotate-0"}`}>
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </div>
+          <span
+            className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
+              theme === "dark" ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none"
+            }`}
+          >
+            <Sun size={18} />
+          </span>
+          <span
+            className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
+              theme === "light" ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none"
+            }`}
+          >
+            <Moon size={18} />
+          </span>
         </button>
 
         {/* Reset Trigger */}

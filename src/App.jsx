@@ -85,7 +85,7 @@ function AppContent() {
       {/* App Footer */}
       <footer className="bg-[color:var(--bg-footer)] border-t border-[color:var(--border-footer)] py-6 text-center text-xs text-[color:var(--text-muted)] font-mono select-none">
         <div className="flex items-center justify-center gap-2 mb-1 text-[color:var(--text-subtle)]">
-          <span className="font-extrabold text-sm"><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-violet-500">Git</span><span className="text-white">Master</span></span>
+          <span className="font-extrabold text-sm"><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-violet-500">Git</span><span style={{ color: 'var(--brand-master)' }}>Master</span></span>
           <span>Terminal Learning Sandbox</span>
         </div>
         <p className="flex items-center justify-center gap-1">
