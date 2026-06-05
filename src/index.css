@@ -57,7 +57,7 @@
   --toast-info-bg: rgba(255, 255, 255, 0.95);
   --toast-info-border: #e2e8f0;
   --toast-info-text: #4338ca;
-  --brand-master: #312e81;
+  --brand-master: #000000;
 }
 
 html {
